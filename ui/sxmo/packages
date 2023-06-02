@@ -7,5 +7,6 @@ postprocessd
 sxmo-sway
 sxmo-ui-sway-meta
 vim
-btrfs
+btrfs-progs
+snap-pac
 snapper
