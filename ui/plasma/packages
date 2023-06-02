@@ -40,5 +40,6 @@ qmlkonsole
 spacebar
 xdg-desktop-portal-kde
 xdg-user-dirs
-btrfs
+btrfs-progs
+snap-pac
 snapper
