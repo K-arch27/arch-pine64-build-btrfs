@@ -1,4 +1,5 @@
 danctnix-usb-tethering
 dhcp
-btrfs
+btrfs-progs
+snap-pac
 snapper
