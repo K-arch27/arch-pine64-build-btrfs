@@ -304,7 +304,7 @@ make_image() {
     parted -s $disk_output mktable gpt
     parted -s $disk_output mkpart boot fat32 ${boot_part_start}MB $[boot_part_start+boot_part_size]MB
     parted -s $disk_output set 1 esp on
-    parted -s $disk_output mkpart primary ext4 $[boot_part_start+boot_part_size]MB '100%'
+    parted -s $disk_output mkpart primary btrfs $[boot_part_start+boot_part_size]MB '100%'
 
     echo "Attaching loop device"
     loop_device=$(losetup -f)
@@ -312,14 +312,75 @@ make_image() {
 
     echo "Creating filesystems"
     mkfs.vfat ${loop_device}p1
-    mkfs.ext4 ${loop_device}p2
+    mkfs.btrfs ${loop_device}p2
+    
+    BOOTUUID=$(blkid -o value -s UUID /dev/${loop_device}p1)
+    ROOTUUID=$(blkid -o value -s UUID /dev/${loop_device}p2)
 
     mkdir -p $temp
     echo "Mounting disk image"
-    mount ${loop_device}p2 $temp
-    mkdir -p $temp/boot
-    mount ${loop_device}p1 $temp/boot
+    mount UUID=${ROOTUUID} $temp
+    
+    #Making subvolumes
+    btrfs subvolume create $temp/@
+	btrfs subvolume create $temp/@/.snapshots
+	mkdir $temp/@/.snapshots/1
+	btrfs subvolume create $temp/@/.snapshots/1/snapshot
+	mkdir $temp/@/boot
+	btrfs subvolume create $temp/@/root
+	btrfs subvolume create $temp/@/srv
+	btrfs subvolume create $temp/@/tmp
+	mkdir $temp/@/usr
+	btrfs subvolume create $temp/@/usr/local
+	mkdir $temp/@/var
+	btrfs subvolume create $temp/@/var/cache
+	btrfs subvolume create $temp/@/var/log
+	btrfs subvolume create $temp/@/var/spool
+	btrfs subvolume create $temp/@/var/tmp
+	NOW=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "<?xml version=\"1.0\"?>" > info.xml
+    echo "<snapshot>" >> info.xml
+    echo "	<type>single</type>" >> info.xml
+    echo "	<num>1</num>" >> info.xml
+    echo "	<date>$NOW</date>" >> info.xml
+    echo "	<description>First Root Filesystem</description>" >> info.xml
+    echo "</snapshot>" >> info.xml
+	cp info.xml $temp/@/.snapshots/1/info.xml
+	sed -i "s|2022-01-01 00:00:00|${NOW}|" $temp/@/.snapshots/1/info.xml
+  	btrfs subvolume set-default $(btrfs subvolume list $temp | grep "@/.snapshots/1/snapshot" | grep -oP '(?<=ID )[0-9]+') $temp
+	btrfs quota enable $temp
+	chattr +C $temp/@/var/cache
+	chattr +C $temp/@/var/log
+	chattr +C $temp/@/var/spool
+	chattr +C $temp/@/var/tmp
 
+    # unmount root to remount with default subvolume
+    umount $temp
+    mount UUID=${ROOTUUID} -o compress=zstd $temp
+    # make directories home, .snapshots, var, tmp
+	mkdir $temp/.snapshots
+	mkdir $temp/root
+	mkdir $temp/srv
+	mkdir $temp/tmp
+	mkdir -p $temp/usr/local
+	mkdir -p $temp/var/cache
+	mkdir $temp/var/log
+	mkdir $temp/var/spool
+	mkdir $temp/var/tmp
+	mkdir $temp/boot
+	mkdir $temp/home
+    # mount subvolumes and partition
+    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/.snapshots $temp/.snapshots
+    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/root $temp/root
+    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/srv $temp/srv
+    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/tmp $temp/tmp
+    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/usr/local $temp/usr/local
+    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/cache $temp/var/cache
+    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/log,nodatacow $temp/var/log
+    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/spool,nodatacow $temp/var/spool
+    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/tmp,nodatacow $temp/var/tmp
+    mount UUID=${BOOTUUID} $temp/boot
+    
     echo "Extracting rootfs to image"
     bsdtar -xpf "$output_folder/$rootfs_tarball" -C "$temp" || true
 
