@@ -36,5 +36,6 @@ noto-fonts-emoji
 portfolio-file-manager
 postprocessd
 xdg-user-dirs
-btrfs
+btrfs-progs
+snap-pac
 snapper
