@@ -398,7 +398,7 @@ make_image() {
 
     echo "Generating fstab"
     genfstab -U $temp | grep UUID | grep -v "swap" | tee -a $temp/etc/fstab
-
+    sed -i 's|,subvolid=258,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
     echo "Unmounting disk image"
     umount -R $temp
     rm -rf $temp
