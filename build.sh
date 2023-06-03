@@ -194,7 +194,7 @@ init_rootfs() {
     wget https://raw.githubusercontent.com/dreemurrs-embedded/Pine64-Arch/master/PKGBUILDS/danctnix/danctnix-keyring/danctnix-trusted \
         -O "$temp/usr/share/pacman/keyrings/danctnix-trusted"
 
-    cat > "$temp/second-phase.sh" <<EOF
+    cat > "$temp/second-phase" <<EOF
 #!/bin/bash
 set -e
 pacman-key --init
@@ -237,8 +237,8 @@ rm -rf /etc/pacman.d/gnupg
 rm /second-phase
 EOF
 
-    chmod +x "$temp/second-phase.sh"
-    chroot "$temp" ./second-phase.sh || error "Failed to run the second phase rootfs build!"
+    chmod +x "$temp/second-phase"
+    do_chroot /second-phase || error "Failed to run the second phase rootfs build!"
 
     cp -r overlays/base/* "$temp/"
     [ -d "overlays/$ui" ] && cp -r overlays/$ui/* "$temp/"
