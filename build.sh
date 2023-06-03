@@ -238,7 +238,7 @@ rm /second-phase
 EOF
 
     chmod +x "$temp/second-phase"
-    do_chroot /second-phase || error "Failed to run the second phase rootfs build!"
+    do_chroot $temp/second-phase || error "Failed to run the second phase rootfs build!"
 
     cp -r overlays/base/* "$temp/"
     [ -d "overlays/$ui" ] && cp -r overlays/$ui/* "$temp/"
