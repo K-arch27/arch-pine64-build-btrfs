@@ -356,6 +356,8 @@ make_image() {
 
     # unmount root to remount with default subvolume
     umount $temp
+    rm -rf $temp
+    mkdir -p $temp
     mount UUID=${ROOTUUID} -o compress=zstd $temp
     # make directories home, .snapshots, var, tmp
 	mkdir $temp/.snapshots
