@@ -396,6 +396,7 @@ make_image() {
         esac; }
 
     echo "Generating fstab"
+    blkid
     genfstab -U $temp | grep UUID | grep -v "swap" | tee -a $temp/etc/fstab
     sed -i 's|,subvolid=258,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
     
