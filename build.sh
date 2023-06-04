@@ -284,20 +284,20 @@ make_image() {
     [ ! -e "$output_folder/$rootfs_tarball" ] && \
         error "Rootfs not found! (how did you get here?)"
 
-    [ $NOCONFIRM -gt 0 ] && [ -f "$output_folder/archlinux-$device-$ui-$date.img" ] && \
-        rm "$output_folder/archlinux-$device-$ui-$date.img"
+    [ $NOCONFIRM -gt 0 ] && [ -f "$output_folder/archlinux-btrfs-$device-$ui-$date.img" ] && \
+        rm "$output_folder/archlinux-btrfs-$device-$ui-$date.img"
 
-    [ -f "$output_folder/archlinux-$device-$ui-$date.img"  ] && {
+    [ -f "$output_folder/archlinux-btrfs-$device-$ui-$date.img"  ] && {
         read -rp "Disk image already exist, delete it? (y/n) " yn
         case $yn in
-            [Yy]*) rm "$output_folder/archlinux-$device-$ui-$date.img" ;;
+            [Yy]*) rm "$output_folder/archlinux-btrfs-$device-$ui-$date.img" ;;
             [Nn]*) return ;;
             *) echo "Aborting." && exit 1 ;;
         esac; }
 
     disk_size="$(eval "echo \${size_ui_$ui}")"
 
-    disk_output="$output_folder/archlinux-$device-$ui-$date.img"
+    disk_output="$output_folder/archlinux-btrfs-$device-$ui-$date.img"
 
     echo "Generating a blank disk image ($disk_size)"
     fallocate -l $disk_size $disk_output
@@ -315,7 +315,7 @@ make_image() {
 
     echo "Attaching loop device"
     loop_device=$(losetup -f)
-    losetup -P $loop_device "$output_folder/archlinux-$device-$ui-$date.img"
+    losetup -P $loop_device "$output_folder/archlinux-btrfs-$device-$ui-$date.img"
 
     echo "Creating filesystems"
     mkfs.vfat ${loop_device}p1
@@ -418,20 +418,20 @@ make_image() {
 make_squashfs() {
     check_dependency mksquashfs
 
-    [ $NOCONFIRM -gt 0 ] && [ -f "$output_folder/archlinux-$device-$ui-$date.sqfs" ] && \
-        rm "$output_folder/archlinux-$device-$ui-$date.sqfs"
+    [ $NOCONFIRM -gt 0 ] && [ -f "$output_folder/archlinux-btrfs-$device-$ui-$date.sqfs" ] && \
+        rm "$output_folder/archlinux-btrfs-$device-$ui-$date.sqfs"
 
-    [ -f "$output_folder/archlinux-$device-$ui-$date.sqfs"  ] && {
+    [ -f "$output_folder/archlinux-btrfs-$device-$ui-$date.sqfs"  ] && {
         read -rp "Squashfs image already exist, delete it? (y/n) " yn
         case $yn in
-            [Yy]*) rm "$output_folder/archlinux-$device-$ui-$date.sqfs" ;;
+            [Yy]*) rm "$output_folder/archlinux-btrfs-$device-$ui-$date.sqfs" ;;
             [Nn]*) return ;;
             *) echo "Aborting." && exit 1 ;;
         esac; }
 
     mkdir -p "$temp"
     bsdtar -xpf "$output_folder/$rootfs_tarball" -C "$temp"
-    mksquashfs "$temp" "$output_folder/archlinux-$device-$ui-$date.sqfs"
+    mksquashfs "$temp" "$output_folder/archlinux-btrfs-$device-$ui-$date.sqfs"
     rm -rf "$temp"
 }
 
