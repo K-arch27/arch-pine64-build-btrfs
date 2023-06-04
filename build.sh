@@ -400,10 +400,7 @@ make_image() {
     blkid
     genfstab -U $temp | grep UUID | grep -v "swap" | tee -a $temp/etc/fstab
     sed -i 's|,subvolid=258,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
-    
-    original_line='setenv bootargs loglevel=4 console=tty0 root=/dev/mmcblk${linux_mmcdev}p${rootpart} console=ttyS2,1500000 rw rootwait quiet bootsplash.bootfile=bootsplash-themes/danctnix/bootsplash'
-    updated_line='setenv bootargs loglevel=4 console=tty0 root=/dev/mmcblk${linux_mmcdev}p${rootpart} console=ttyS2,1500000 rw rootfstype=btrfs rootwait quiet bootsplash.bootfile=bootsplash-themes/danctnix/bootsplash'
-    sed -i "s|$original_line|$updated_line|" $temp/boot/boot.txt
+    cp devices/pinephone-pro/boot.txt $temp/boot/boot.txt
     mkimage -A arm -O linux -T script -C none -n "U-Boot boot script" -d $temp/boot/boot.txt $temp/boot/boot.scr
     
     echo "Unmounting disk image"
