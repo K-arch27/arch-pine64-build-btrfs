@@ -1,5 +1,3 @@
-groupadd -r autologin
-gpasswd -a alarm autologin
 systemctl enable bluetooth
 systemctl enable cups
 systemctl enable ModemManager
