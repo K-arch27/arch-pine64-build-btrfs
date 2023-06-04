@@ -400,7 +400,7 @@ make_image() {
     echo "Generating fstab"
     blkid
     genfstab -U $temp | grep UUID | grep -v "swap" | tee -a $temp/etc/fstab
-    sed -i 's|,subvolid=258,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
+    sed -i 's|,subvolid=259,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
     cp devices/pinephone-pro/boot.txt $temp/boot/boot.txt
     mkimage -A arm -O linux -T script -C none -n "U-Boot boot script" -d $temp/boot/boot.txt $temp/boot/boot.scr
     
