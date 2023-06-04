@@ -355,7 +355,7 @@ make_image() {
     umount $temp
     rm -rf $temp
     mkdir -p $temp
-    mount /dev/${loop_device}p2 -o compress=zstd $temp
+    mount ${loop_device}p2 -o compress=zstd $temp
     # make directories home, .snapshots, var, tmp
 	mkdir $temp/.snapshots
 	mkdir $temp/root
