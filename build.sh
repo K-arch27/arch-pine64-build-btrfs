@@ -8,6 +8,7 @@ set -e
 SUPPORTED_ARCHES=(aarch64 armv7)
 NOCONFIRM=0
 OSK_SDL=0
+password="123456"
 NO_BOOTLOADER=0
 use_mesa_git=0
 output_folder="build"
@@ -18,7 +19,7 @@ date=$(date +%Y%m%d)
 
 error() { echo -e "\e[41m\e[5mERROR:\e[49m\e[25m $1" && exit 1; }
 check_dependency() { [ $(which $1) ] || error "$1 not found. Please make sure it is installed and on your PATH."; }
-usage() { error "$0 [-a ARCHITECTURE] [-d device] [-u ui] [-h hostname] [--username username] [--osk-sdl] [--noconfirm] [--cachedir directory] [--no-cachedir]"; }
+usage() { error "$0 [-a ARCHITECTURE] [-d device] [-u ui] [-h hostname] [--username username] [--password password] [--osk-sdl] [--noconfirm] [--cachedir directory] [--no-cachedir]"; }
 cleanup() {
     trap '' EXIT
     trap '' INT
@@ -230,8 +231,8 @@ if [ -e /etc/sudoers ]; then
 fi
 
 cat << FOE | passwd $username
-123456
-123456
+$password
+$password
 
 FOE
 
