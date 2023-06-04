@@ -214,7 +214,8 @@ systemctl enable zramswap
 systemctl enable NetworkManager
 
 userdel alarm
-useradd -m ${username:-alarm}
+rm -rfd /home/alarm
+useradd -m $username
 if [ $ui == "plasma" ]; then
 groupadd -r autologin
 usermod -a -G autologin,network,video,audio,rfkill,wheel $username
