@@ -408,7 +408,11 @@ make_image() {
     blkid
     genfstab -U $temp | grep UUID | grep -v "swap" | tee -a $temp/etc/fstab
     sed -i 's|,subvolid=259,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
-    cp devices/pinephone-pro/boot.txt $temp/boot/boot.txt
+    if [ ! -f "$temp/boot/boot.txt" ]; then
+	 cp devices/pinephone-pro/boot.txt $temp/boot/boot.txt
+    else
+    	sed -i 's/rw rootwait/rw rootfstype=btrfs rootwait/g' "$temp/boot/boot.txt"
+    fi
     mkimage -A arm -O linux -T script -C none -n "U-Boot boot script" -d $temp/boot/boot.txt $temp/boot/boot.scr
     
     echo "Unmounting disk image"
