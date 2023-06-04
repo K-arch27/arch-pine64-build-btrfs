@@ -8,6 +8,7 @@ set -e
 SUPPORTED_ARCHES=(aarch64 armv7)
 NOCONFIRM=0
 OSK_SDL=0
+username="alarm"
 password="123456"
 NO_BOOTLOADER=0
 use_mesa_git=0
