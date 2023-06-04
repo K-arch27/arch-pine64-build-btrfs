@@ -5,6 +5,8 @@ generate Image on a Btrfs Root with a snapper compatible layout for rollback
 
 (An ARM environement is required since this script chroot inside the generated system)
 
+Default User/Pass : alarm/123456
+
 --
 
 Usage :
