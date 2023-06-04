@@ -253,6 +253,7 @@ EOF
     [ -e "$temp/usr/lib/initcpio/hooks/resizerootfs" ] && sed -i 's/fsck/resizerootfs fsck/g' "$temp/etc/mkinitcpio.conf"
     [ -e "$temp/usr/lib/initcpio/hooks/osk-sdl" ] && sed -i 's/fsck/osk-sdl fsck/g' "$temp/etc/mkinitcpio.conf"
     [ -e "$temp/usr/lib/initcpio/install/bootsplash-danctnix" ] && sed -i 's/fsck/fsck bootsplash-danctnix/g' "$temp/etc/mkinitcpio.conf"
+    sed -i 's/fsck/fsck btrfs/g' "$temp/etc/mkinitcpio.conf"
     sed -i 's/MODULES=()/MODULES=(btrfs)/g' "$temp/etc/mkinitcpio.conf"
     sed -i "s/REPLACEDATE/$date/g" "$temp/usr/local/sbin/first_time_setup.sh"
 
