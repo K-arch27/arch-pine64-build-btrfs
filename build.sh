@@ -314,12 +314,9 @@ make_image() {
     mkfs.vfat ${loop_device}p1
     mkfs.btrfs ${loop_device}p2
     
-    BOOTUUID=$(blkid -o value -s UUID /dev/${loop_device}p1)
-    ROOTUUID=$(blkid -o value -s UUID /dev/${loop_device}p2)
-
     mkdir -p $temp
     echo "Mounting disk image"
-    mount UUID=${ROOTUUID} $temp
+    mount /dev/${loop_device}p2 $temp
     
     #Making subvolumes
     btrfs subvolume create $temp/@
@@ -358,7 +355,7 @@ make_image() {
     umount $temp
     rm -rf $temp
     mkdir -p $temp
-    mount UUID=${ROOTUUID} -o compress=zstd $temp
+    mount /dev/${loop_device}p2 -o compress=zstd $temp
     # make directories home, .snapshots, var, tmp
 	mkdir $temp/.snapshots
 	mkdir $temp/root
@@ -372,16 +369,16 @@ make_image() {
 	mkdir $temp/boot
 	mkdir $temp/home
     # mount subvolumes and partition
-    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/.snapshots $temp/.snapshots
-    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/root $temp/root
-    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/srv $temp/srv
-    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/tmp $temp/tmp
-    mount UUID=${ROOTUUID} -o noatime,compress=zstd,ssd,commit=120,subvol=@/usr/local $temp/usr/local
-    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/cache $temp/var/cache
-    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/log,nodatacow $temp/var/log
-    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/spool,nodatacow $temp/var/spool
-    mount UUID=${ROOTUUID} -o noatime,ssd,commit=120,subvol=@/var/tmp,nodatacow $temp/var/tmp
-    mount UUID=${BOOTUUID} $temp/boot
+    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/.snapshots $temp/.snapshots
+    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/root $temp/root
+    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/srv $temp/srv
+    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/tmp $temp/tmp
+    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/usr/local $temp/usr/local
+    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/cache $temp/var/cache
+    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/log,nodatacow $temp/var/log
+    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/spool,nodatacow $temp/var/spool
+    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/tmp,nodatacow $temp/var/tmp
+    mount /dev/${loop_device}p1 $temp/boot
     
     echo "Extracting rootfs to image"
     bsdtar -xpf "$output_folder/$rootfs_tarball" -C "$temp" || true
