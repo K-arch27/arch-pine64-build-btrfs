@@ -1,7 +1,7 @@
 # arch-pine64-build-btrfs
 Rootfs builder for Arch Linux ARM on PinePhone (Pro)/PineTab
 generate Image on a Btrfs Root with a snapper compatible layout for rollback
-
+(An ARM environement is required since this script chroot inside the generated system)
 
 Usage :
 
