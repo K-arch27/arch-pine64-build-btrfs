@@ -52,6 +52,7 @@ parse_args() {
             -d|--device) device=$2; shift ;;
             -u|--ui) ui=$2; shift ;;
             --username) username=$2; shift ;;
+	    --password) password=$2; shift ;;
             -h|--hostname) hostname=$2; shift ;;
             --noconfirm) NOCONFIRM=1;;
             --osk-sdl) OSK_SDL=1;;
