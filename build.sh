@@ -316,7 +316,7 @@ make_image() {
     
     mkdir -p $temp
     echo "Mounting disk image"
-    mount /dev/${loop_device}p2 $temp
+    mount ${loop_device}p2 $temp
     
     #Making subvolumes
     btrfs subvolume create $temp/@
@@ -369,16 +369,16 @@ make_image() {
 	mkdir $temp/boot
 	mkdir $temp/home
     # mount subvolumes and partition
-    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/.snapshots $temp/.snapshots
-    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/root $temp/root
-    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/srv $temp/srv
-    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/tmp $temp/tmp
-    mount /dev/${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/usr/local $temp/usr/local
-    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/cache $temp/var/cache
-    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/log,nodatacow $temp/var/log
-    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/spool,nodatacow $temp/var/spool
-    mount /dev/${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/tmp,nodatacow $temp/var/tmp
-    mount /dev/${loop_device}p1 $temp/boot
+    mount ${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/.snapshots $temp/.snapshots
+    mount ${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/root $temp/root
+    mount ${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/srv $temp/srv
+    mount ${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/tmp $temp/tmp
+    mount ${loop_device}p2 -o noatime,compress=zstd,ssd,commit=120,subvol=@/usr/local $temp/usr/local
+    mount ${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/cache $temp/var/cache
+    mount ${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/log,nodatacow $temp/var/log
+    mount ${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/spool,nodatacow $temp/var/spool
+    mount ${loop_device}p2 -o noatime,ssd,commit=120,subvol=@/var/tmp,nodatacow $temp/var/tmp
+    mount ${loop_device}p1 $temp/boot
     
     echo "Extracting rootfs to image"
     bsdtar -xpf "$output_folder/$rootfs_tarball" -C "$temp" || true
