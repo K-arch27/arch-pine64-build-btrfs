@@ -22,11 +22,11 @@ Default User/Pass : alarm/123456
          
          [--password password]
          
-         [--osk-sdl] 0 or 1
+         [--osk-sdl]
          
-         [--noconfirm] 0 or 1
+         [--noconfirm]
          
-         [--cachedir directory]
+         [--cachedir directory] directory = directory path for the pkgcache
          
          [--no-cachedir]
 
