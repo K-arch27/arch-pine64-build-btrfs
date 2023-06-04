@@ -1,11 +1,9 @@
 # arch-pine64-build-btrfs
 Rootfs builder for Arch Linux ARM on PinePhone (Pro)/PineTab
-
-Work in progress to try and make it generate Image on a Btrfs Root with a snapper compatible layout for rollback
+generate Image on a Btrfs Root with a snapper compatible layout for rollback
 
 
 Usage :
-
 
          req.  [-a architecture] architecture = aarch64 or armv7
 
@@ -17,6 +15,8 @@ Usage :
          
          [--username username]
          
+         [--password password]
+         
          [--osk-sdl] 0 or 1
          
          [--noconfirm] 0 or 1
@@ -26,3 +26,5 @@ Usage :
          [--no-cachedir]
 
 Example : sudo ./build -a aarch64 -d pinephone-pro -u ui phosh
+
+Example with custom Info: sudo ./build -a aarch64 -d pinephone-pro -u ui phosh -h Pine-Arch-Btrfs --username kaida --password 1234
