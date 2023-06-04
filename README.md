@@ -5,6 +5,7 @@ Work in progress to try and make it generate Image on a Btrfs Root with a snappe
 
 
 Usage example : sudo ./build -a aarch64 -d pinephone-pro -u ui phosh
+
 other parameters are optionnal
 
          [-a architecture] architecture = aarch64 or armv7
