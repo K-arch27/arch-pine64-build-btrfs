@@ -34,3 +34,12 @@ Usage :
 Example : sudo ./build -a aarch64 -d pinephone-pro -u ui phosh
 
 Example with custom Info: sudo ./build -a aarch64 -d pinephone-pro -u ui phosh -h Pine-Arch-Btrfs --username kaida --password 1234
+
+
+
+
+## Building on x86\_64
+
+If you want to cross-build the image from another architecture, you will need to [use QEMU](https://wiki.archlinux.org/title/QEMU#Chrooting_into_arm/arm64_environment_from_x86_64) for the second build stage.
+
+On Arch Linux, this can be done by installing [`binfmt-qemu-static`](https://aur.archlinux.org/packages/binfmt-qemu-static/) and [`qemu-user-static`](https://aur.archlinux.org/packages/qemu-user-static/) on the build host.
