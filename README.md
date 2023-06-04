@@ -4,7 +4,7 @@ Rootfs builder for Arch Linux ARM on PinePhone (Pro)/PineTab
 Work in progress to try and make it generate Image on a Btrfs Root with a snapper compatible layout for rollback
 
 
-Usage : sudo ./build -a architecture -d device -u ui 
+Usage example : sudo ./build -a aarch64 -d pinephone-pro -u ui phosh
 other parameters are optionnal
 
          [-a architecture] architecture = aarch64 or armv7
