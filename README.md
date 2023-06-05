@@ -1,7 +1,7 @@
 # arch-pine64-build-btrfs
 Rootfs builder for Arch Linux ARM on PinePhone (Pro)/PineTab
 
-generate Image on a Btrfs Root with a snapper compatible layout for rollback
+generate Image on a Btrfs Root with snapper for Snapshot/rollback
 
 
 Default User/Pass : alarm/123456
