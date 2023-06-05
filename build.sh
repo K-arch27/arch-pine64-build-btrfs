@@ -189,7 +189,7 @@ init_rootfs() {
         sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' "$temp/etc/locale.gen"
     fi
 
-    echo "${hostname:-danctnix-btrfs}" > "$temp/etc/hostname"
+    echo "${hostname:-Danct-Arch-Btrfs}" > "$temp/etc/hostname"
 
     # Download our gpg key and install it first, this however will be overwritten with our package later.
     wget https://raw.githubusercontent.com/dreemurrs-embedded/Pine64-Arch/master/PKGBUILDS/danctnix/danctnix-keyring/danctnix.gpg \
