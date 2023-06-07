@@ -31,7 +31,12 @@ w
 EOF
 
     partx -u ${DEVICE}
-    $FSRESIZER ${DEVICE}p2
+    case ${ROOTFS_FILESYSTYPE} in
+        *fsck.f2fs*) $FSRESIZER ${DEVICE}p2;;
+        *fsck.ext*) $FSRESIZER ${DEVICE}p2;;
+        *fsck.btrfs*) $FSRESIZER;;
+    esac
+    
     sync
 
     if [ -e /sys/devices/platform/bootsplash.0/enabled ]; then
