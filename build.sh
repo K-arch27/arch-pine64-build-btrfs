@@ -413,7 +413,7 @@ make_image() {
     echo "Generating fstab"
     blkid
     genfstab -U $temp | grep UUID | grep -v "swap" | tee -a $temp/etc/fstab
-    sed -i 's|,subvolid=259,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
+    sed -i 's|,subvolid=258,subvol=/@/.snapshots/1/snapshot| |' $temp/etc/fstab
     if [ ! -f "$temp/boot/boot.txt" ]; then
 	 cp devices/pinephone-pro/boot.txt $temp/boot/boot.txt
     else
