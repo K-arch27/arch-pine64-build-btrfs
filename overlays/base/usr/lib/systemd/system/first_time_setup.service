@@ -2,7 +2,8 @@
 Description=First Time Setup
 After=basic.target getty.target
 Wants=basic.target
-Conflicts=getty@tty1.service shutdown.target
+Before=getty@tty1.service 
+Conflicts=shutdown.target
 DefaultDependencies=no
 
 [Service]
