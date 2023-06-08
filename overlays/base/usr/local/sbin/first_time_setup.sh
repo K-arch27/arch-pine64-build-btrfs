@@ -45,6 +45,8 @@ sed -i 's|TIMELINE_LIMIT_YEARLY="10"|TIMELINE_LIMIT_YEARLY="0"|' /etc/snapper/co
 systemctl enable snapper-timeline.timer
 systemctl enable snapper-cleanup.timer
 
+#Resizing Btrfs filesystem
+btrfs filesystem resize max /
 
 # Cleanup
 rm /usr/local/sbin/first_time_setup.sh
