@@ -56,3 +56,4 @@ rm /usr/lib/systemd/system/basic.target.wants/first_time_setup.service
 if [ -e /sys/devices/platform/bootsplash.0/enabled ]; then
     echo 1 > /sys/devices/platform/bootsplash.0/enabled
 fi
+reboot
