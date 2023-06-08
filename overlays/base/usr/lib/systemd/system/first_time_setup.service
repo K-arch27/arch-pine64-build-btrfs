@@ -1,6 +1,7 @@
 [Unit]
 Description=First Time Setup
-Before=basic.target getty.target shutdown.target
+After=basic.target
+Wants=basic.target
 Conflicts=shutdown.target
 DefaultDependencies=no
 
