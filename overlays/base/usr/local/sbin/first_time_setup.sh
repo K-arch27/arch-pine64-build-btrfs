@@ -15,7 +15,7 @@ date +%Y%m%d -s "REPLACEDATE" # this is changed by the make_rootfs script
 
 # Initialize the pacman keyring
 pacman-key --init
-pacman-key --populate archlinuxarm danctnix
+pacman-key --populate
 
 if [ -e "/usr/lib/initcpio/hooks/resizerootfs" ]; then
     rm /usr/lib/initcpio/hooks/resizerootfs
