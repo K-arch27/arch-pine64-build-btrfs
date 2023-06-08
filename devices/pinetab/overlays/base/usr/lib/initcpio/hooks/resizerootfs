@@ -16,7 +16,7 @@ run_hook() {
     case ${ROOTFS_FILESYSTYPE} in
         *fsck.f2fs*) FSRESIZER="/usr/sbin/resize.f2fs";;
         *fsck.ext*) FSRESIZER="/usr/sbin/resize2fs -f";;
-        *fsck.btrfs*) FSRESIZER="/usr/sbin/btrfs filesystem resize max /";;
+        *fsck.btrfs*) FSRESIZER='echo "Resizing filesystem in first boot script" ';;
     esac
 
     fdisk ${DEVICE} <<EOF
