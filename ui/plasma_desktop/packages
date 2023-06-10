@@ -54,3 +54,6 @@ sweeper
 vlc
 xdg-desktop-portal-kde
 xdg-user-dirs
+btrfs-progs
+snap-pac
+snapper
