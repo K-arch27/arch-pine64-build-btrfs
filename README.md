@@ -2,9 +2,9 @@
 
 
          
-Rootfs builder for Arch Linux ARM on PinePhone (Pro)/PineTab
+Rootfs builder for Arch Linux ARM on PinePhone (Pro)/PineTab(2)
 
-(only tested with Pinephone Pro as I don't own the OG or the PineTab)
+(only tested with Pinephone Pro as I don't own the OG or the PineTab/2)
 
 generate Image on a Btrfs Root with snapper for Snapshot/rollback
 
