@@ -13,9 +13,10 @@ run_hook() {
 
     ROOTFS_FILESYSTYPE=$(fsck -N $root)
 
-    case ${ROOTFS_FILESYSTYPE} in
+     case ${ROOTFS_FILESYSTYPE} in
         *fsck.f2fs*) FSRESIZER="/usr/sbin/resize.f2fs";;
         *fsck.ext*) FSRESIZER="/usr/sbin/resize2fs -f";;
+        *fsck.btrfs*) FSRESIZER='echo "Resizing filesystem in first boot script" ';;
     esac
 
     fdisk ${DEVICE} <<EOF
@@ -30,7 +31,11 @@ w
 EOF
 
     partx -u ${DEVICE}
-    $FSRESIZER ${DEVICE}p2
+    case ${ROOTFS_FILESYSTYPE} in
+        *fsck.f2fs*) $FSRESIZER ${DEVICE}p2;;
+        *fsck.ext*) $FSRESIZER ${DEVICE}p2;;
+        *fsck.btrfs*) $FSRESIZER;;
+    esac
     sync
 
     if [ -e /sys/devices/platform/bootsplash.0/enabled ]; then
