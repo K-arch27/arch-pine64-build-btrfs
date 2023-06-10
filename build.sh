@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # SPDX-License-Identifier: GPL-3.0-only
-# Copyright 2021 Dang Huynh <danct12@disroot.org>
+# Copyright 2023 Dang Huynh <danct12@disroot.org>
 
 set -e
 
@@ -11,7 +11,7 @@ OSK_SDL=0
 username="alarm"
 password="123456"
 NO_BOOTLOADER=0
-use_mesa_git=0
+use_pipewire=0
 output_folder="build"
 mkdir -p "$output_folder"
 cachedir="$output_folder/pkgcache"
@@ -78,7 +78,7 @@ parse_presets() {
     done
 
     for i in $(cat "ui/$ui/packages"); do
-        [ $use_mesa_git -gt 0 ] && [ $i = "mesa" ] && i="mesa-git"
+        [ $use_pipewire -gt 0 ] && packages_ui+=( pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse )
         packages_ui+=( $i )
     done
 

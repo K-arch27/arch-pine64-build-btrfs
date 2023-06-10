@@ -1,0 +1,17 @@
+curl
+danctnix-keyring
+device-pine64-pinetab2
+dialog
+dosfstools
+f2fs-tools
+iw
+linux-firmware
+netctl
+networkmanager
+pv
+rfkill
+sudo
+v4l-utils
+wpa_supplicant
+xz
+zramswap
